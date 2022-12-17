@@ -1,7 +1,7 @@
 import '../node_modules/normalize.css/normalize.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './styles/style.sass';
-import data from './assets/data.json';
+// import data from './assets/data.json';
 
 
 fetch('https://dummyjson.com/products?limit=100')
@@ -9,6 +9,3 @@ fetch('https://dummyjson.com/products?limit=100')
   .then(data => {
     console.log(data.products);
   });
-
-console.log(data);
-  
