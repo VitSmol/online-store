@@ -1,6 +1,41 @@
-
+@import 'variables'
+.filter__wrapper
+  display: grid
+  grid-template-areas: "search search search select" "categories categories brands brands" "categories categories brands brands" "prices prices stocks stocks" "reset reset copy-link size"
+  height: 500px
+  overflow: hidden
+  margin-top: $indent
+  padding: $indent
+  box-shadow: 0px 0px 35px rgb(0 0 0 / 14%)
+#search
+  grid-area: search
+#select
+  grid-area: select
+#categories
+  grid-area: categories
+#brands
+  grid-area: brands
+#prices
+  grid-area: prices
+#stocks
+  grid-area: stocks
+#reset
+  grid-area: reset
+#copy-link
+  grid-area: copy-link
+#size
+  grid-area: size
 #categories, #brands
   display: flex
   flex-direction: column
-  height: 400px
+  height: 250px
   overflow-y: scroll
+  gap: 5px
+  &::-webkit-scrollbar
+    width: 7px
+    background-color: transparent
+  &::-webkit-scrollbar-thumb
+    background-color: #1B984D 
+    border-radius: 3px
+  &::hover 
+

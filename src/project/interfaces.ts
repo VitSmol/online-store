@@ -23,3 +23,12 @@ export enum SearchBy {
   price = "price",
   stock = "stock"
 }
+
+export type eventType = {
+  clientX: number
+}
+
+export type minMax = {
+  min: number;
+  max: number;
+}
