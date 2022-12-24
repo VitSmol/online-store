@@ -38,5 +38,18 @@ new Slider(priceSlider as HTMLDivElement, price.min, price.max);
 createList(categories, categoryContainer as HTMLElement, SearchBy.category);
 createList(brands, brandsContainer as HTMLElement, SearchBy.brand);
 
-console.log(stock);
+const createDots = (parent: HTMLElement, count: number): void => {
+  for (let i = 0; i < count; i += 1) {
+    const dot = document.createElement('span');
+    parent.append(dot);
+  }
+};
+// console.log(stock);
+const buttons = document.querySelectorAll('#size > button');
+buttons.forEach(el =>
+  el.classList.contains('small-size') ? 
+    createDots(el as HTMLElement, 16) : 
+    createDots(el as HTMLElement, 36)
+);
+
 
