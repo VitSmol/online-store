@@ -1,0 +1,164 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap')
+
+$orange: #FF9900
+$main-background-color: #E7E7E7
+$header-top-color: #F8F8F8
+$black: #000000
+$gray: #7D7D7D
+$medium-text: 18px
+$search-field-height: 54px
+
+@mixin basic-flex()
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  align-items: center
+
+@mixin link()
+  color: $black
+  text-decoration: none
+
+@mixin list()
+  list-style: none
+  padding: 0
+  margin: 0
+
+.header
+  max-width: 100vw
+  background: $main-background-color
+  font-size: $medium-text
+  font-weight: 400
+
+.header-top
+  background: $main-background-color
+
+.header-bottom
+  background: $header-top-color
+
+.header-logo
+  // background-image: url("../assets/logo.svg")
+
+  background: #f00
+  background-size: 141px
+  background-position: center
+  width: 141px
+  height: 41px
+
+.button
+  padding: 0
+  margin: 0
+  outline: none
+  background: none
+  border: none
+
+.container
+  max-width: 1280px
+  padding: 0
+
+.header-top .container,
+.header-bottom .container
+  @include basic-flex
+  min-height: 100px
+  padding: 10px
+
+.menu-list
+  @include basic-flex
+  @include list
+  gap: 25px
+
+.menu-link
+  @include link
+  font-family: $medium-text
+  line-height: 21px
+
+.menu-link:hover
+  @include link
+  color: $orange
+
+.phones
+  @include basic-flex
+  justify-content: flex-end
+  max-width: 440px
+
+.phone-numbers
+  color: $gray
+  font-size: 22px
+  line-height: 190%
+
+.number
+  color: $black
+
+.phones-link
+  @include link
+  font-size: 14px
+  line-height: 190%
+  color: $gray
+
+.phones-link:hover
+  @include link
+
+.search-form
+  position: relative
+
+.search-field
+  width: 650px
+  height: $search-field-height
+  background: linear-gradient(98.34deg, #FFFFFF 0%, #FFFFFF 100%)
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.05)
+  border: none
+  outline: none
+  border-radius: 30px
+  font-family: Roboto, sans-serif
+  padding: 10px 20px
+
+.search-field:focus
+  box-shadow: inset 0px 0px 5px rgba(255, 153, 0, 0.3)
+
+.search-field::placeholder
+  font-family: Roboto, sans-serif
+
+.left-burger
+  width: 22px
+  height: 16px
+  background: #f00
+  // background: url("/src/assets/left-burger.svg")
+
+.search-button
+  position: absolute
+  top: calc( 50% - 12px )
+  right: 20px
+  width: 24px
+  height: 24px
+  background: #f00
+
+.user-buy-list
+  color: $orange
+
+.user-goods-controls
+  @include basic-flex
+  gap: 35px
+
+.user-goods-controls .button
+  width: 24px
+  height: 24px
+  background: #f00
+
+.favorite-button
+  background: url("/src/assets/star.svg")
+
+.trolley-button
+  position: relative
+  background: url("/src/assets/trolley.svg")
+
+.account-button
+  background: url("/src/assets/user-avatar.svg")
+
+.trolley-goods-count
+  position: absolute
+  top: -15px
+  left: 8px
+  z-index: 100
+  font-size: 12px
+  font-weight: bold
+  color: $orange
