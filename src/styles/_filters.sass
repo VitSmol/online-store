@@ -1,0 +1,89 @@
+@import 'variables'
+.filter__wrapper
+  display: grid
+  grid-template-areas: "search search search select" "categories categories brands brands" "categories categories brands brands" "prices prices stocks stocks" "reset  copy-link size size"
+  gap: 10px
+  overflow: hidden
+  margin-top: $indent
+  padding: $indent
+  border-radius: 10px
+  box-shadow: $shadow
+#search
+  grid-area: search
+  label
+    width: 100%
+    height: 40px
+    box-shadow: $shadow
+    padding-left: 20px
+    border-radius: 10px
+    input[type='text']
+      border: none
+      width: 100%
+      padding-left: 20px
+      &:active
+        border: none
+      &:focus
+        border: none
+        outline: none
+#select
+  grid-area: select
+  #sortBy
+    height: 40px
+    border: none
+    box-shadow: $shadow
+    border-radius: 10px
+#categories
+  grid-area: categories
+#brands
+  grid-area: brands
+#prices
+  grid-area: prices
+#stocks
+  grid-area: stocks
+#reset
+  grid-area: reset
+#copy-link
+  grid-area: copy-link
+#reset,
+#copy-link
+  justify-self: center
+#size
+  grid-area: size
+  display: flex
+  justify-self: center
+  gap: 10px
+  & > .btn
+    width: 40px
+    height: 40px
+    display: grid
+    padding: 1px
+    &.small-size
+      grid-template: repeat(4, 1fr) / repeat(4, 1fr)
+    &.big-size
+      grid-template: repeat(6, 1fr) / repeat(6, 1fr)
+    span
+      width: 4px
+      height: 4px
+      display: block
+      // border-radius: 50%
+      background-color: #fff
+      align-self: center
+      justify-self: center
+#categories, #brands
+  display: flex
+  flex-direction: column
+  height: 250px
+  overflow-y: scroll
+  gap: 5px
+  scroll-snap-type: y mandatory
+  border-top: 10px solid white
+  & > *
+    scroll-snap-align: end
+  &::-webkit-scrollbar
+    width: 3px
+    background-color: transparent
+  &::-webkit-scrollbar-thumb
+    background-color: transparent
+    background-color: $bg-color
+    border-radius: 3px
+
