@@ -12,12 +12,14 @@ const price = getCost(products, SearchBy.price);
 
 const createList = (items: category, parent: HTMLElement, searchBy: SearchBy): void => {
   Object.entries(items).forEach((el, index) => {
+    const dataAttr = el[0];
     const label = document.createElement('label');
     label.setAttribute('for', searchBy + (index + 1));
     label.classList.add('category');
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.setAttribute('name', parent.getAttribute('id') as string);
+
     input.classList.add('category');
     input.id = searchBy + (index + 1);
     label.append(input, el[0][0].toUpperCase() + el[0].slice(1).toLowerCase());
