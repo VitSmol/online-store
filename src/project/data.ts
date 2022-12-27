@@ -15,6 +15,7 @@ export const getCheckboxes = (arr: readonly Product[], value: string): category 
   });
   return obj;
 };
+
 export const getCost = (arr: readonly Product[], value: string): minMax => {
   const values: Set<number> = new Set();
   arr.forEach((el) => values.add(el[value as keyof Product] as number));
@@ -25,5 +26,4 @@ export const getCost = (arr: readonly Product[], value: string): minMax => {
   
 };
 
-// filterArray(products, "stock");
 

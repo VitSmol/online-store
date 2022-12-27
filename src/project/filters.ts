@@ -12,7 +12,6 @@ const price = getCost(products, SearchBy.price);
 
 const createList = (items: category, parent: HTMLElement, searchBy: SearchBy): void => {
   Object.entries(items).forEach((el, index) => {
-    const dataAttr = el[0];
     const label = document.createElement('label');
     label.setAttribute('for', searchBy + (index + 1));
     label.classList.add('category');

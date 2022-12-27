@@ -28,11 +28,19 @@ const baseConfig =  {
           'sass-loader'
         ]
       },
-      {
-        test: /\.jpe?g$|\.gif$|\.png$|\.ico$|\.svg$/,
-        use: ['file-loader']
-        // type: 'assets/resource'
-      }
+      // {
+      //   test: /\.jpe?g$|\.gif$|\.png$|\.ico$|\.svg$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         name: '[name].[ext]',
+      //         outputPath:  './'
+      //         useRelativePath: true
+      //       }
+      //     }
+      //   ]
+      // }
     ]
   },
   resolve: {

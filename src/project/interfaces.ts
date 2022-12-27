@@ -14,7 +14,6 @@ export type Product = {
 
 export type category = {
   category?: number;
-  // name?: string;
 }
 
 export enum SearchBy {
