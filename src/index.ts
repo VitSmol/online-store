@@ -2,6 +2,7 @@ import '../node_modules/normalize.css/normalize.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './styles/style.sass';
 import './project/filters';
+import './project/showProducts';
 
 
 
