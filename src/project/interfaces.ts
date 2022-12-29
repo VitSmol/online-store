@@ -31,3 +31,8 @@ export type minMax = {
   min: number;
   max: number;
 }
+
+export interface IProduct {
+  showElement(): void;
+  addToCart(): void;
+}

@@ -1,13 +1,10 @@
 // import { products } from "./data";
-import { Product } from "./interfaces";
+import { IProduct, Product } from "./interfaces";
 
-
-// const product: Product = products[0];
-
-// console.log(product);
-
-export class Goods {
-
+export class Goods implements IProduct {
+  static cart: Product[] = [];
+  static allProducts: Product[] = [];
+  
   constructor(
     public parent: HTMLDivElement,
     public element: Product
@@ -16,7 +13,12 @@ export class Goods {
   createCard() {
     const card = document.createElement('div');
     card.classList.add('goods-card');
-    card.dataset.value = this.element.category;
+    card.dataset.category = this.element.category;
+    card.dataset.brand = this.element.brand.toLowerCase();
+    card.dataset.brand = this.element.brand.toLowerCase();
+    card.dataset.rating = this.element.rating as unknown as string;
+    card.dataset.price = this.element.price as unknown as string;
+    card.dataset.stock = this.element.stock as unknown as string;
 
     const cardImage = document.createElement('div');
     cardImage.classList.add('card-image');
@@ -37,21 +39,14 @@ export class Goods {
     const h3 = document.createElement('h3');
     h3.classList.add('product-name');
     h3.innerHTML = this.element.title;
-
-    // const name = document.createElement('div');
-    // name.classList.add('product-name');
-    // name.innerText = this.element.title;
-    // name.dataset.value = this.element.title;
     
     const brand = document.createElement('div');
     brand.classList.add('product-brand');
     brand.innerText = this.element.brand;
-    brand.dataset.value = this.element.brand;
     
     const rating = document.createElement('div');
     rating.classList.add('product-rating');
     rating.innerText = this.element.rating as unknown as string;
-    rating.dataset.value = this.element.rating as unknown as string;
 
     const controls = document.createElement('div');
     controls.classList.add('product-controls');
@@ -59,7 +54,7 @@ export class Goods {
     const price = document.createElement('div');
     price.classList.add('product-price');
     price.innerText = this.element.price as unknown as string;
-    price.dataset.value = this.element.price as unknown as string;
+
     
     const btnMore = document.createElement('button');
     btnMore.classList.add('more-info-button', 'button');
@@ -75,9 +70,15 @@ export class Goods {
     this.parent.append(card);
 
     btnMore.addEventListener('click', this.showElement.bind(this));
+    cartBtn.addEventListener('click', this.addToCart.bind(this));
   }
 
   showElement() {
     console.log(this.element);
+  }
+
+  addToCart() {
+    Goods.cart.push(this.element);
+    console.log(Goods.cart);
   }
 }

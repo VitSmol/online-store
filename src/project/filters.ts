@@ -14,12 +14,12 @@ const createList = (items: category, parent: HTMLElement, searchBy: SearchBy): v
   Object.entries(items).forEach((el, index) => {
     const label = document.createElement('label');
     label.setAttribute('for', searchBy + (index + 1));
-    label.classList.add('category');
+    label.classList.add(searchBy);
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
-    input.setAttribute('name', parent.getAttribute('id') as string);
+    input.setAttribute('name', searchBy);
 
-    input.classList.add('category');
+    input.classList.add(searchBy);
     input.id = searchBy + (index + 1);
     label.append(input, el[0][0].toUpperCase() + el[0].slice(1).toLowerCase());
     parent.append(label);
