@@ -1,4 +1,6 @@
 
+//! simple not implementation
+
 import { products } from "./data";
 import { Product } from "./interfaces";
 
@@ -6,45 +8,41 @@ const allGoods = document.querySelectorAll('.goods-card');
 const categories = document.querySelectorAll("input.category");
 const brands = document.querySelectorAll("input.brand");
 
-const filtered = (key: string, value: string, isShow: boolean) => {
+const filtered = (key: string, value: string, checked: boolean) => {
   const goods = document.querySelectorAll('.goods-card');
-  // const showedGoods = goods.filter(el => {
-  //   return el.classList.contain('hide')
-  // });
   goods.forEach((el) => {
-
-    if (isShow && el.getAttribute('data-' + key) !== value.toLocaleLowerCase()) {
-      el.classList.add('hide');
-      if ( el.getAttribute('data-' + key) !== value.toLocaleLowerCase()) {
-        el.classList.remove('hide');
+    const val = value.toLocaleLowerCase();
+    const attrName = el.getAttribute('data-' + key);
+    const isHideClass = el.classList.contains('hide');
+    const isShowClass = el.classList.contains('show');
+    if (checked) {
+      if (attrName !== val && !isShowClass) {
+        el.classList.add('hide');
       }
-      // && 
-    } else {
-      el.classList.remove('hide');
+      if (attrName === val) {
+        el.classList.add('show');
+        el.classList.remove('hide');
+    
+      }
+      if (!isShowClass && isHideClass && attrName === val) {
+        el.classList.remove('hide');
+        el.classList.add('show');
+      }
+    }
+    if (!checked) {
+      //
     }
   });
-  // console.log(key, value);
-
 };
 
 const clickBy = (...groupe: NodeListOf<Element>[]) => {
   groupe.forEach((el) => {
     el.forEach((input) => {
       input.addEventListener('click', function (this: HTMLInputElement) {
-        // if (this.checked) {
         filtered(this.name, this.nextSibling?.textContent as string, this.checked);
-        // console.log('checked');
-
-        // console.dir();
-        // }
-        // if (!this.checked) {
-        //   console.log('not checked');
-
-        // }
       });
     });
   });
 };
 
 clickBy(brands, categories);
-// hide('category', 'smartphones');

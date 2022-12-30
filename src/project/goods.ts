@@ -13,6 +13,7 @@ export class Goods implements IProduct {
   createCard() {
     const card = document.createElement('div');
     card.classList.add('goods-card');
+    // card.classList.add('show');
     card.dataset.category = this.element.category;
     card.dataset.brand = this.element.brand.toLowerCase();
     card.dataset.brand = this.element.brand.toLowerCase();
