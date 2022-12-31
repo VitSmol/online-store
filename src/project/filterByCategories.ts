@@ -1,10 +1,10 @@
 
 //! simple not implementation
 
-import { products } from "./data";
-import { Product } from "./interfaces";
+// import { products } from "./data";
+// import { Product } from "./interfaces";
 
-const allGoods = document.querySelectorAll('.goods-card');
+// const allGoods = document.querySelectorAll('.goods-card');
 const categories = document.querySelectorAll("input.category");
 const brands = document.querySelectorAll("input.brand");
 
@@ -15,6 +15,8 @@ const filtered = (key: string, value: string, checked: boolean) => {
     const attrName = el.getAttribute('data-' + key);
     const isHideClass = el.classList.contains('hide');
     const isShowClass = el.classList.contains('show');
+    console.log(`log`);
+    
     if (checked) {
       if (attrName !== val && !isShowClass) {
         el.classList.add('hide');

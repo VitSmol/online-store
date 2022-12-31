@@ -1,4 +1,4 @@
-import { eventType } from "./interfaces";
+import { eventType } from "../interfaces";
 
 export class Slider {
   startPosition: number;

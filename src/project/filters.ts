@@ -1,6 +1,7 @@
 import { getCheckboxes, getCost, products } from "./data";
-import { category, SearchBy } from "./interfaces";
-import { Slider } from "./slider";
+import { SearchBy } from "./interfaces";
+import { Slider } from "./classes/slider";
+import { Filter } from "./classes/filter";
 
 const categoryContainer = document.getElementById('categories');
 const brandsContainer = document.getElementById('brands');
@@ -10,21 +11,6 @@ const brands = getCheckboxes(products, SearchBy.brand);
 const stock = getCost(products, SearchBy.stock);
 const price = getCost(products, SearchBy.price);
 
-const createList = (items: category, parent: HTMLElement, searchBy: SearchBy): void => {
-  Object.entries(items).forEach((el, index) => {
-    const label = document.createElement('label');
-    label.setAttribute('for', searchBy + (index + 1));
-    label.classList.add(searchBy);
-    const input = document.createElement('input');
-    input.setAttribute('type', 'checkbox');
-    input.setAttribute('name', searchBy);
-
-    input.classList.add(searchBy);
-    input.id = searchBy + (index + 1);
-    label.append(input, el[0][0].toUpperCase() + el[0].slice(1).toLowerCase());
-    parent.append(label);
-  });
-};
 
 const priceSlider = document.getElementById('price');
 const stockSlider = document.getElementById('stock');
@@ -36,8 +22,9 @@ stockSlider?.setAttribute('data-max', stock.max as unknown as string);
 new Slider(stockSlider as HTMLDivElement, stock.min, stock.max);
 new Slider(priceSlider as HTMLDivElement, price.min, price.max);
 
-createList(categories, categoryContainer as HTMLElement, SearchBy.category);
-createList(brands, brandsContainer as HTMLElement, SearchBy.brand);
+new Filter(categories, categoryContainer as HTMLDivElement, SearchBy.category, true).create();
+new Filter(brands, brandsContainer as HTMLDivElement, SearchBy.brand, false).create();
+
 
 const createDots = (parent: HTMLElement, count: number): void => {
   for (let i = 0; i < count; i += 1) {

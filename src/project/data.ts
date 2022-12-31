@@ -8,9 +8,9 @@ export const getCheckboxes = (arr: readonly Product[], value: string): category 
   arr.forEach((el) => {
     const val = el[value as keyof Product] as string;
     if (!obj[val as keyof category]) {
-      obj[val as keyof category] = 1;
+      obj[val.toLowerCase() as keyof category] = 1;
     } else {
-      obj[val as keyof category]!++;
+      obj[val.toLowerCase() as keyof category]!++;
     }
   });
   return obj;
