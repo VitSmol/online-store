@@ -47,7 +47,6 @@ export class ProductClass implements IProduct {
     const img: HTMLImageElement = document.createElement('img');
     img.alt = element.title;
     img.src = element.thumbnail;
-    // img.style.width = '200px';
 
     const discount = document.createElement('div');
     discount.classList.add('product-discount');
@@ -83,7 +82,6 @@ export class ProductClass implements IProduct {
 
     const cartBtn = document.createElement('button');
     cartBtn.classList.add('add-trolley-button', 'button');
-
 
     controls.append(price, btnMore, cartBtn);
     info.append(h3, brand, rating, controls);

@@ -24,7 +24,8 @@ export class CheckboxItem {
     this.input.addEventListener('click', this.log.bind(this));
   }
   log() {
-    // this.isChecked = !this.isChecked;
+    this.hideOtherInputs();
+
     if (this.input.checked) {
       
       const arr = ProductClass.allProducts.filter((product) => {
@@ -37,22 +38,43 @@ export class CheckboxItem {
       ProductClass.tempProducts.sort((a, b) => a.id - b.id);
       ProductClass.tempProducts = [... new Set(ProductClass.tempProducts)];
       CheckboxItem.parent2 = document.querySelector('.goods-cards') as HTMLDivElement;
+      // console.log(ProductClass.tempProducts);
+
       new ProductClass(CheckboxItem.parent2, ProductClass.tempProducts).init();
     }
     if (!this.input.checked) {
       const arr = ProductClass.tempProducts.filter((product) => {
-        if (typeof product === 'string') {
+        if (typeof product[this.searchBy] === 'string') {
           return (product[this.searchBy] as string).toLowerCase() !== this.el[0];
         }
         return product[this.searchBy] !== this.el[0];
       });
-      // CheckboxItem.parent2 = document.querySelector('.goods-cards') as HTMLDivElement;
-      ProductClass.tempProducts = [...arr];
-      // ProductClass.tempProducts = [... new Set(ProductClass.tempProducts)];
+      CheckboxItem.parent2 = document.querySelector('.goods-cards') as HTMLDivElement;
+      ProductClass.tempProducts = [...new Set(arr)];
       new ProductClass(CheckboxItem.parent2, ProductClass.tempProducts).init();
-      console.log(ProductClass.tempProducts);
-      console.log(arr);
-      console.log(this.el[0]);
     }
+  }
+  hideOtherInputs() {
+    // console.log(this.input);
+    console.log(this.searchBy);
+
+    // if (this.searchBy === 'category') {
+    const inputs = document.querySelectorAll('input.' + this.searchBy);
+    if (this.input.checked) {
+      inputs.forEach((input) => {
+        if (input !== this.input) {
+          this.input.classList.remove('notActive');
+          (input as HTMLInputElement).classList.add('notActive');
+        }
+      });
+    }
+    if (!this.input.checked) {
+      inputs.forEach((input) => {
+        if (!(input as HTMLInputElement).checked) {
+          input.classList.remove('notActive');
+        }
+      });
+    }
+    // }
   }
 }
