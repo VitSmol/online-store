@@ -38,6 +38,6 @@ export interface IProduct {
 }
 
 export type query = {
-  category?: string[],
-  brand?: string[],
+  category?: Array<string | undefined>,
+  brand?: Array<string | undefined>,
 }
