@@ -36,3 +36,8 @@ export interface IProduct {
   showElement(): void;
   addToCart(): void;
 }
+
+export type query = {
+  category?: string[],
+  brand?: string[],
+}

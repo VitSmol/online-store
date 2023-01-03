@@ -1,8 +1,9 @@
-import { SearchBy } from "../interfaces";
+import { query, SearchBy } from "../interfaces";
 import { ProductClass } from "./productClass";
 
 export class CheckboxItem {
-  static parent2: HTMLDivElement;
+  static goodsParent: HTMLDivElement;
+  static query: query;
   constructor(
     public label: HTMLLabelElement,
     public input: HTMLInputElement,
@@ -21,44 +22,70 @@ export class CheckboxItem {
     this.input.id = this.searchBy + (this.index + 1);
     this.label.append(this.input, this.el[0][0].toUpperCase() + this.el[0].slice(1).toLowerCase());
     this.parent.append(this.label);
-    this.input.addEventListener('click', this.log.bind(this));
+    this.input.addEventListener('click', this.showHide.bind(this));
   }
-  log() {
+  showHide() {
     this.hideOtherInputs();
+    if (this.searchBy === 'category') {
+      if (this.input.checked) {
+        const arr = ProductClass.allProducts.filter((product) => {
+          if (typeof product[this.searchBy] === 'string') {
+            return (product[this.searchBy] as string).toLowerCase() === this.el[0];
+          }
+          return product[this.searchBy] === this.el[0];
+        });
+        ProductClass.tempProducts = [...ProductClass.tempProducts, ...arr];
+        console.log(ProductClass.tempProducts);
 
-    if (this.input.checked) {
+        ProductClass.tempProducts.sort((a, b) => a.id - b.id);
+        ProductClass.tempProducts = [... new Set(ProductClass.tempProducts)];
+        ProductClass._parent = document.querySelector('.goods-cards') as HTMLDivElement;
+        new ProductClass(ProductClass._parent, ProductClass.tempProducts).init(ProductClass.tempProducts);
+      }
+      if (!this.input.checked) {
+        const arr = ProductClass.tempProducts.filter((product) => {
+          if (typeof product[this.searchBy] === 'string') {
+            return (product[this.searchBy] as string).toLowerCase() !== this.el[0];
+          }
+          return product[this.searchBy] !== this.el[0];
+        });
+        ProductClass._parent = document.querySelector('.goods-cards') as HTMLDivElement;
+        ProductClass.tempProducts = [...new Set(arr)];
+        if (ProductClass.tempProducts.length === 0) {
+          new ProductClass(ProductClass._parent, ProductClass.allProducts).init(ProductClass.allProducts);
+        } else {
+          new ProductClass(ProductClass._parent, ProductClass.tempProducts).init(ProductClass.tempProducts);
+        }
+      }
       
-      const arr = ProductClass.allProducts.filter((product) => {
-        if (typeof product[this.searchBy] === 'string') {
-          return (product[this.searchBy] as string).toLowerCase() === this.el[0];
-        }
-        return product[this.searchBy] === this.el[0];
-      });
-      ProductClass.tempProducts = [...ProductClass.tempProducts, ...arr];
-      ProductClass.tempProducts.sort((a, b) => a.id - b.id);
-      ProductClass.tempProducts = [... new Set(ProductClass.tempProducts)];
-      CheckboxItem.parent2 = document.querySelector('.goods-cards') as HTMLDivElement;
-      // console.log(ProductClass.tempProducts);
-
-      new ProductClass(CheckboxItem.parent2, ProductClass.tempProducts).init();
     }
-    if (!this.input.checked) {
-      const arr = ProductClass.tempProducts.filter((product) => {
-        if (typeof product[this.searchBy] === 'string') {
-          return (product[this.searchBy] as string).toLowerCase() !== this.el[0];
-        }
-        return product[this.searchBy] !== this.el[0];
-      });
-      CheckboxItem.parent2 = document.querySelector('.goods-cards') as HTMLDivElement;
-      ProductClass.tempProducts = [...new Set(arr)];
-      new ProductClass(CheckboxItem.parent2, ProductClass.tempProducts).init();
+    if (this.searchBy === 'brand') {
+      // console.log(this.searchBy);
+      if (this.input.checked) {
+        ProductClass._parent = document.querySelector('.goods-cards') as HTMLDivElement;
+        const arr = ProductClass.tempProducts.filter((product) => {
+          if (typeof product[this.searchBy] === 'string') {
+            return (product[this.searchBy] as string).toLowerCase() === this.el[0].toLowerCase();
+          }
+        });
+        new ProductClass(ProductClass._parent, arr).init(arr);
+        console.log(!!this.checkGoods().length);
+      }
+      if (!this.input.checked) {
+        ProductClass._parent = document.querySelector('.goods-cards') as HTMLDivElement;
+        const arr = ProductClass.tempProducts.filter((product) => {
+          if (typeof product[this.searchBy] === 'string') {
+            return (product[this.searchBy] as string).toLowerCase() !== this.el[0];
+          }
+          return product[this.searchBy] !== this.el[0];
+        });
+        new ProductClass(ProductClass._parent, arr).init([... new Set([...ProductClass.tempProducts, ...arr])]);
+        console.log(arr);
+      }
     }
   }
-  hideOtherInputs() {
-    // console.log(this.input);
-    console.log(this.searchBy);
 
-    // if (this.searchBy === 'category') {
+  hideOtherInputs() {
     const inputs = document.querySelectorAll('input.' + this.searchBy);
     if (this.input.checked) {
       inputs.forEach((input) => {
@@ -75,6 +102,8 @@ export class CheckboxItem {
         }
       });
     }
-    // }
+  }
+  checkGoods() {
+    return document.querySelectorAll('card');
   }
 }

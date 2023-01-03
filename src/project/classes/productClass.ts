@@ -5,6 +5,7 @@ import { IProduct, Product } from "../interfaces";
 export class ProductClass implements IProduct {
   public currentProduct!: Product;
   public card!: HTMLDivElement;
+  static _parent: HTMLDivElement;
   static cart: Product[] = [];
   static allProducts: Product[] = [...products];
   static tempProducts: Product[] = [];
@@ -13,27 +14,19 @@ export class ProductClass implements IProduct {
     public parent: HTMLDivElement,
     public products: Readonly<Product[]>
   ) {
-    
+
   }
 
-  init() {
-    if (ProductClass.tempProducts.length === 0) {
-      this.parent.innerHTML = '';
-      for (const item of ProductClass.allProducts) {
-        this.create(item);
-      }
-    } else {
-      this.parent.innerHTML = '';
-      for (const item of ProductClass.tempProducts) {
-        this.create(item);
-      }
+  init(array: Product[]): void {
+    this.parent.innerHTML = '';
+    for (const item of array) {
+      this.create(item);
     }
   }
   create(element: Product) {
     this.currentProduct = element;
     this.card = document.createElement('div');
     this.card.classList.add('goods-card');
-    // card.classList.add('show');
     this.card.dataset.category = element.category;
     this.card.dataset.brand = element.brand.toLowerCase();
     this.card.dataset.brand = element.brand.toLowerCase();
