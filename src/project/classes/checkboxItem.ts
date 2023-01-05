@@ -77,44 +77,18 @@ export class CheckboxItem {
     for (const [key, value] of Object.entries(allQuery)) {
       allQuery[key as keyof query] = [...new Set(value)];
     }
-    console.log(allQuery);
-    
-    // getCompare(ProductClass.allProducts, CheckboxItem.query);
-
     function filterInputs(this: query, value: CheckboxItem) {
-      if (this.brand) {
-        // console.log(this.brand.to);
-        
+      value.input.classList.add('notActive');
+
+      if (!this.brand && !this.category) {
+        value.input.classList.remove('notActive');
+        return;
       }
-      // value.input.classList.add('notActive');
-      // if (!this.brand!.includes(value.input.dataset.value?.toLowerCase())) {
-      //   value.input.classList.add('notActive');
-      // }
-      // if (!checkQuery) {
-      //   value.input.classList.remove('notActive');
-      // }
-      // console.log(value.input.dataset.value);
-      // console.log();
-
+      if (this.brand!.includes(value.input.dataset.value) || this.category!.includes(value.input.dataset.value)) {
+        value.input.classList.remove('notActive');
+      }
     }
-
     Filter.checkboxItems.forEach(filterInputs, allQuery);
-    // const inputs = document.querySelectorAll('input.' + this.searchBy);
-    // if (this.input.checked) {
-    //   inputs.forEach((input) => {
-    //     if (input !== this.input) {
-    //       this.input.classList.remove('notActive');
-    //       (input as HTMLInputElement).classList.add('notActive');
-    //     }
-    //   });
-    // }
-    // if (!this.input.checked) {
-    //   inputs.forEach((input) => {
-    //     if (!(input as HTMLInputElement).checked) {
-    //       input.classList.remove('notActive');
-    //     }
-    //   });
-    // }
   }
   checkGoods() {
     return document.querySelectorAll('.card');
