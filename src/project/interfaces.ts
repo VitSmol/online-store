@@ -34,7 +34,7 @@ export type minMax = {
 
 export interface IProduct {
   showElement(): void;
-  addToCart(): void;
+  addToCart(element: Product): void;
 }
 
 export type query = {

@@ -12,15 +12,19 @@ export class ProductClass implements IProduct {
 
   constructor(
     public parent: HTMLDivElement,
-    public products: Readonly<Product[]>
   ) {
 
   }
 
   init(array: Product[]): void {
     this.parent.innerHTML = '';
-    for (const item of array) {
-      this.create(item);
+    if (array.length !== 0) {
+      this.itemsFound(true);
+      for (const item of array) {
+        this.create(item);
+      }
+    } else {
+      this.itemsFound(false);
     }
   }
   create(element: Product) {
@@ -33,67 +37,56 @@ export class ProductClass implements IProduct {
     this.card.dataset.rating = element.rating as unknown as string;
     this.card.dataset.price = element.price as unknown as string;
     this.card.dataset.stock = element.stock as unknown as string;
-
     const cardImage = document.createElement('div');
     cardImage.classList.add('card-image');
-
     const img: HTMLImageElement = document.createElement('img');
     img.alt = element.title;
     img.src = element.thumbnail;
-
     const discount = document.createElement('div');
     discount.classList.add('product-discount');
     discount.innerText = element.discountPercentage + '%';
     discount.dataset.value = element.discountPercentage as unknown as string;
     cardImage.append(img, discount);
-
     const info = document.createElement('div');
     info.classList.add('card-info');
     const h3 = document.createElement('h3');
     h3.classList.add('product-name');
     h3.innerHTML = element.title;
-
     const brand = document.createElement('div');
     brand.classList.add('product-brand');
     brand.innerText = element.brand;
-
     const rating = document.createElement('div');
     rating.classList.add('product-rating');
     rating.innerText = element.rating as unknown as string;
-
     const controls = document.createElement('div');
     controls.classList.add('product-controls');
-
     const price = document.createElement('div');
     price.classList.add('product-price');
     price.innerText = element.price as unknown as string;
-
-
     const btnMore = document.createElement('button');
     btnMore.classList.add('more-info-button', 'button');
     btnMore.innerText = 'More Info';
-
     const cartBtn = document.createElement('button');
     cartBtn.classList.add('add-trolley-button', 'button');
-
     controls.append(price, btnMore, cartBtn);
     info.append(h3, brand, rating, controls);
     this.card.append(cardImage, info);
     this.parent.append(this.card);
-
     btnMore.addEventListener('click', this.showElement.bind(this));
-    cartBtn.addEventListener('click', this.addToCart.bind(this));
+    cartBtn.addEventListener('click', this.addToCart.bind(this, this.currentProduct));
   }
 
-  // static showHide(element: Product, searchBy: SearchBy): void {
-  //TODO this.card = 
-  // }
-  showElement() {
-    // console.log(element);
+  itemsFound(isFound: boolean): void {
+    const h2 = document.getElementById('goods');
+    isFound ? h2!.innerText = 'Товары в наличии:' : h2!.innerText = 'Товары не найдены!';
   }
 
-  addToCart() {
-    // ProductClass.cart.push(element);
+  addToCart(element: Product): void {
+    ProductClass.cart.push(element);
+    console.log(element);
+    console.log(ProductClass.cart);
   }
-
+  showElement(): void {
+    throw new Error("Method not implemented.");
+  }
 }
