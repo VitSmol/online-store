@@ -1,6 +1,7 @@
 // import { products } from "./data";
 import { products } from "../data";
 import { IProduct, Product } from "../interfaces";
+import { getDescriptionPage } from "../description";
 
 export class ProductClass implements IProduct {
   public currentProduct!: Product;
@@ -88,6 +89,7 @@ export class ProductClass implements IProduct {
   }
   showElement(element: Product): void {
     console.log(element);
-    
+    const main = document.querySelector('.main') as HTMLElement;
+    main.innerHTML = getDescriptionPage(element.id);
   }
 }
