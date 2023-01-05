@@ -3,12 +3,11 @@ import { CheckboxItem } from "./checkboxItem";
 
 
 export class Filter {
-  static checkboxItem: CheckboxItem[] = [];
+  static checkboxItems: CheckboxItem[] = [];
   constructor(
     public items: category,
     public parent: HTMLDivElement,
     public searchBy: SearchBy,
-    public isChecked: boolean
   ) {
 
   }
@@ -17,8 +16,8 @@ export class Filter {
     Object.entries(this.items).forEach((el, index) => {
       const label = document.createElement('label');
       const input = document.createElement('input');
-      const element = new CheckboxItem(label, input, this.parent, this.searchBy, this.isChecked, index, el);
-      Filter.checkboxItem.push(element);
+      const element = new CheckboxItem(label, input, this.parent, this.searchBy, index, el);
+      Filter.checkboxItems.push(element);
     });
   }
 

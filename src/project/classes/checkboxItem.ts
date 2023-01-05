@@ -1,4 +1,5 @@
 import { Product, query, SearchBy } from "../interfaces";
+import { Filter } from "./filter";
 import { ProductClass } from "./productClass";
 
 export class CheckboxItem {
@@ -14,7 +15,6 @@ export class CheckboxItem {
     public input: HTMLInputElement,
     public parent: HTMLDivElement,
     public searchBy: SearchBy,
-    public isChecked: boolean,
     public index: number,
     public el: [string, number]
   ) {
@@ -33,33 +33,104 @@ export class CheckboxItem {
   }
 
   hideOtherInputs() {
-    const inputs = document.querySelectorAll('input.' + this.searchBy);
-    if (this.input.checked) {
-      inputs.forEach((input) => {
-        if (input !== this.input) {
-          this.input.classList.remove('notActive');
-          (input as HTMLInputElement).classList.add('notActive');
+    // const value = this.input.dataset.value;
+    const checkQuery = this.checkQuery(CheckboxItem.query);
+
+    // function getCompare (array: Product[], query: query)  {
+    //   array.forEach((product: Product) => {
+    //     console.log(this);
+
+    //   }, query);
+    // }
+    const allQuery: query = {};
+    function inputsQuery(this: query, product: Product): void {
+      const currentCategory = this.category;
+      const currentBrand = this.brand;
+      if (currentCategory?.includes(product.category)) {
+        console.log('in this');
+        if (!allQuery.category) {
+          allQuery.category = [product.category];
+        } else {
+          allQuery.category.push(product.category);
         }
-      });
-    }
-    if (!this.input.checked) {
-      inputs.forEach((input) => {
-        if (!(input as HTMLInputElement).checked) {
-          input.classList.remove('notActive');
+        if (!allQuery.brand) {
+          allQuery.brand = [product.brand.toLowerCase()];
+        } else {
+          allQuery.brand.push(product.brand.toLowerCase());
         }
-      });
+      }
+      if (currentBrand?.includes(product.brand.toLowerCase())) {
+        if (!allQuery.brand) {
+          allQuery.brand = [product.brand.toLowerCase()];
+        } else {
+          allQuery.brand.push(product.brand.toLowerCase());
+        }
+        if (!allQuery.category) {
+          allQuery.category = [product.category];
+        } else {
+          allQuery.category.push(product.category);
+        }
+      }
     }
+
+    ProductClass.allProducts.forEach(inputsQuery, CheckboxItem.query);
+    for (const [key, value] of Object.entries(allQuery)) {
+      allQuery[key as keyof query] = [...new Set(value)];
+    }
+    console.log(allQuery);
+    
+    // getCompare(ProductClass.allProducts, CheckboxItem.query);
+
+    function filterInputs(this: query, value: CheckboxItem) {
+      if (this.brand) {
+        // console.log(this.brand.to);
+        
+      }
+      // value.input.classList.add('notActive');
+      // if (!this.brand!.includes(value.input.dataset.value?.toLowerCase())) {
+      //   value.input.classList.add('notActive');
+      // }
+      // if (!checkQuery) {
+      //   value.input.classList.remove('notActive');
+      // }
+      // console.log(value.input.dataset.value);
+      // console.log();
+
+    }
+
+    Filter.checkboxItems.forEach(filterInputs, allQuery);
+    // const inputs = document.querySelectorAll('input.' + this.searchBy);
+    // if (this.input.checked) {
+    //   inputs.forEach((input) => {
+    //     if (input !== this.input) {
+    //       this.input.classList.remove('notActive');
+    //       (input as HTMLInputElement).classList.add('notActive');
+    //     }
+    //   });
+    // }
+    // if (!this.input.checked) {
+    //   inputs.forEach((input) => {
+    //     if (!(input as HTMLInputElement).checked) {
+    //       input.classList.remove('notActive');
+    //     }
+    //   });
+    // }
   }
   checkGoods() {
     return document.querySelectorAll('.card');
   }
+
+  //! Проверяет запрос. Если все значения пусты - значит запрос пустой.
   checkQuery(query: query): boolean {
     return Object.values(query).some((el) => {
       return el.length > 0;
     });
   }
+
   querySearch() {
     this.getQuery();
+    this.hideOtherInputs();
+
     function filteredArray(this: query, value: Product) {
       if (this.brand!.length && this.category!.length) {
         return this.brand!.includes(value.brand.toLowerCase()) && this.category!.includes(value.category);
@@ -71,6 +142,7 @@ export class CheckboxItem {
         return this.brand!.includes(value.brand.toLowerCase());
       }
     }
+
     ProductClass.tempProducts = ProductClass.allProducts.filter(filteredArray, CheckboxItem.query as query);
     ProductClass._parent = document.querySelector('.goods-cards') as HTMLDivElement;
 

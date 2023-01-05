@@ -72,7 +72,7 @@ export class ProductClass implements IProduct {
     info.append(h3, brand, rating, controls);
     this.card.append(cardImage, info);
     this.parent.append(this.card);
-    btnMore.addEventListener('click', this.showElement.bind(this));
+    btnMore.addEventListener('click', this.showElement.bind(this, this.currentProduct));
     cartBtn.addEventListener('click', this.addToCart.bind(this, this.currentProduct));
   }
 
@@ -86,7 +86,8 @@ export class ProductClass implements IProduct {
     console.log(element);
     console.log(ProductClass.cart);
   }
-  showElement(): void {
-    throw new Error("Method not implemented.");
+  showElement(element: Product): void {
+    console.log(element);
+    
   }
 }

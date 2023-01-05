@@ -33,7 +33,7 @@ export type minMax = {
 }
 
 export interface IProduct {
-  showElement(): void;
+  showElement(element: Product): void;
   addToCart(element: Product): void;
 }
 

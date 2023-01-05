@@ -22,8 +22,8 @@ stockSlider?.setAttribute('data-max', stock.max as unknown as string);
 new Slider(stockSlider as HTMLDivElement, stock.min, stock.max);
 new Slider(priceSlider as HTMLDivElement, price.min, price.max);
 
-new Filter(categories, categoryContainer as HTMLDivElement, SearchBy.category, true).create();
-new Filter(brands, brandsContainer as HTMLDivElement, SearchBy.brand, false).create();
+new Filter(categories, categoryContainer as HTMLDivElement, SearchBy.category).create();
+new Filter(brands, brandsContainer as HTMLDivElement, SearchBy.brand).create();
 
 const createDots = (parent: HTMLElement, count: number): void => {
   for (let i = 0; i < count; i += 1) {
