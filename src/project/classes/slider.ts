@@ -1,15 +1,17 @@
-import { eventType } from "../interfaces";
+import { eventType, minMax } from "../interfaces";
+// import { Filter } from "./filter";
 
 export class Slider {
   startPosition: number;
   range: HTMLDivElement;
-  min: number;
-  max: number;
   handles: Element[];
   activeHandle!: Element;
   moveTouchListener!: EventListenerOrEventListenerObject;
   moveListener!: EventListenerOrEventListenerObject;
-  constructor(element: HTMLDivElement, min: number, max: number) {
+  constructor(
+    public element: HTMLDivElement,
+    public min: number,
+    public max: number) {
     this.range = element;
     this.min = min;
     this.max = max;
@@ -24,7 +26,7 @@ export class Slider {
     window.addEventListener('touchend', this.stopMove.bind(this));
     window.addEventListener('touchcancel', this.stopMove.bind(this));
     window.addEventListener('touchleave', this.stopMove.bind(this));
-    
+
     const rangeRect = this.range.getBoundingClientRect();
     const handleRect = this.handles[0].getBoundingClientRect();
     const firstHandle = this.handles[0] as HTMLElement | null;
@@ -33,6 +35,13 @@ export class Slider {
     this.range.style.setProperty("--x-2", rangeRect.width - handleRect.width / 2 + "px");
     firstHandle!.dataset.value = this.range.dataset.min;
     secondHandle!.dataset.value = this.range.dataset.max;
+
+    //TODO
+    // const btn = document.querySelector('.btn-warning');
+    // btn!.addEventListener('click', this.setMinValue.bind(this));
+  }
+  destroy() {
+    this.element.innerHTML = '';
   }
 
   startMoveTouch(e: TouchEvent) {
@@ -45,8 +54,6 @@ export class Slider {
   }
 
   startMove(e: Event): void {
-    console.log(`start move`);
-    
     this.startPosition = (e as MouseEvent).offsetX;
     this.activeHandle = e.target as HTMLElement;
     this.moveListener = this.move.bind(this);
@@ -56,7 +63,7 @@ export class Slider {
   moveTouch(e: Event) {
     this.move({ clientX: (e as TouchEvent).touches[0].clientX });
   }
-  move(e: eventType | unknown) { //! is so bad 
+  move(e: eventType | unknown) {
     const isLeft = this.activeHandle.classList.contains("left");
     const property = isLeft ? "--x-1" : "--x-2";
     const parentRect = this.range.getBoundingClientRect();
@@ -83,4 +90,13 @@ export class Slider {
     window.removeEventListener("mousemove", this.moveListener);
     window.removeEventListener("touchmove", this.moveTouchListener);
   }
+  setValue = (minMax: minMax) => {
+    const minX = 300 / this.max * minMax.min - 9.75;
+    const maxX = 300 / this.max * minMax.max - 9.75;
+    (this.handles[0] as HTMLElement).dataset.value = minMax.min+"";
+    (this.handles[1] as HTMLElement).dataset.value = minMax.max+"";
+    this.range.style.setProperty("--x-1", minX + "px");
+    this.range.style.setProperty("--x-2", maxX + "px");
+  };
+
 }

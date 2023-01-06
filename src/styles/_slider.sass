@@ -50,9 +50,13 @@
   &:active 
     cursor: grabbing
   &.left 
-    left: var(--x-1) 
+    left: var(--x-1)
+    &::after
+      left: 0% 
   &.right 
     left: var(--x-2) 
+    &::after
+      left: 150%
   &::after 
     content: '€ 'attr(data-value) 
     width: max-content
@@ -60,3 +64,4 @@
     top: 100% 
     left: 50% 
     transform: translateX(-50%) 
+  

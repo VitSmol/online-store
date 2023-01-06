@@ -1,3 +1,5 @@
+import { getCost } from "../data";
+import { price, stock } from "../filters";
 import { Product, query, SearchBy } from "../interfaces";
 import { Filter } from "./filter";
 import { ProductClass } from "./productClass";
@@ -27,27 +29,15 @@ export class CheckboxItem {
     this.input.id = this.searchBy + (this.index + 1);
     this.label.append(this.input, this.el[0][0].toUpperCase() + this.el[0].slice(1).toLowerCase());
     this.parent.append(this.label);
-    // this.input.addEventListener('click', this.showHide.bind(this));
     this.input.addEventListener('click', this.querySearch.bind(this));
-    // this.input.addEventListener('click', this.querySearch2.bind(this));
   }
 
   hideOtherInputs() {
-    // const value = this.input.dataset.value;
-    const checkQuery = this.checkQuery(CheckboxItem.query);
-
-    // function getCompare (array: Product[], query: query)  {
-    //   array.forEach((product: Product) => {
-    //     console.log(this);
-
-    //   }, query);
-    // }
     const allQuery: query = {};
     function inputsQuery(this: query, product: Product): void {
       const currentCategory = this.category;
       const currentBrand = this.brand;
       if (currentCategory?.includes(product.category)) {
-        console.log('in this');
         if (!allQuery.category) {
           allQuery.category = [product.category];
         } else {
@@ -126,6 +116,21 @@ export class CheckboxItem {
       new ProductClass(ProductClass._parent).init(ProductClass.allProducts);
     } else if (ProductClass.tempProducts.length && this.checkQuery(CheckboxItem.query)) {
       new ProductClass(ProductClass._parent).init(ProductClass.tempProducts);
+    }
+    if (ProductClass.tempProducts.length !== 0) {
+      if (this.checkQuery(CheckboxItem.query)) {
+        Filter.sliderItems[0].setValue(price);
+        Filter.sliderItems[1].setValue(stock);
+      }
+
+      const getPrice = getCost(ProductClass.tempProducts, SearchBy.price);
+      const getStock = getCost(ProductClass.tempProducts, SearchBy.stock);
+      Filter.sliderItems[0].setValue(getPrice);
+      Filter.sliderItems[1].setValue(getStock);
+
+    } else {
+      Filter.sliderItems[0].setValue(price);
+      Filter.sliderItems[1].setValue(stock);
     }
   }
   getQuery() {
