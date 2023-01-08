@@ -1,9 +1,11 @@
 import { category, SearchBy } from "../interfaces";
 import { CheckboxItem } from "./checkboxItem";
+import { Slider } from "./slider";
 
 
 export class Filter {
   static checkboxItems: CheckboxItem[] = [];
+  static sliderItems: Slider[] = [];
   constructor(
     public items: category,
     public parent: HTMLDivElement,

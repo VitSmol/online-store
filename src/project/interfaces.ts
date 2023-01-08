@@ -32,6 +32,11 @@ export type minMax = {
   max: number;
 }
 
+export type minMaxQuery = {
+  price?: minMax
+  stock?: minMax
+}
+
 export interface IProduct {
   showElement(element: Product): void;
   addToCart(element: Product): void;
@@ -40,4 +45,6 @@ export interface IProduct {
 export type query = {
   category?: Array<string | undefined>,
   brand?: Array<string | undefined>,
+  // price?: Array<number | undefined>,
+  // stock?: Array<number | undefined>,
 }
