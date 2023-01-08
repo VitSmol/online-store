@@ -138,8 +138,8 @@ export class CheckboxItem {
     }
     if (ProductClass.tempProducts.length !== 0) {
       if (this.checkQuery(CheckboxItem.query)) {
-        Filter.sliderItems[0].setValue(filters.price);
-        Filter.sliderItems[1].setValue(filters.stock);
+        // Filter.sliderItems[0].setValue(filters.price);
+        // Filter.sliderItems[1].setValue(filters.stock);
       }
 
       const getPrice = getCost(ProductClass.tempProducts, SearchBy.price);
@@ -148,8 +148,8 @@ export class CheckboxItem {
       Filter.sliderItems[1].setValue(getStock);
 
     } else {
-      Filter.sliderItems[0].setValue(filters.price);
-      Filter.sliderItems[1].setValue(filters.stock);
+      // Filter.sliderItems[0].setValue(filters.price);
+      // Filter.sliderItems[1].setValue(filters.stock);
     }
 
     // setStorage(CheckboxItem.query);

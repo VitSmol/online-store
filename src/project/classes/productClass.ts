@@ -1,8 +1,9 @@
 // import { products } from "./data";
 import { products } from "../data";
 import { IProduct, Product } from "../interfaces";
-import { getDescriptionPage } from "../description";
+import { getDescriptionPage, changeMainPicture } from "../description";
 import { drawProducts, getCartPage } from "../cart";
+import { showPopup } from "../showPopup";
 
 export class ProductClass implements IProduct {
   public currentProduct!: Product;
@@ -101,6 +102,20 @@ export class ProductClass implements IProduct {
     console.log(element);
     const main = document.querySelector('.main') as HTMLElement;
     main.innerHTML = getDescriptionPage(element.id);
+
+    const productGallery = main.querySelector('.product-gallery') as HTMLElement;
+    const mainImage = productGallery.querySelector('.gallery-main-image') as HTMLImageElement;
+    const addButton = main.querySelector('.add-trolley-button') as HTMLButtonElement;
+    const buyButton = main.querySelector('.buy-button') as HTMLButtonElement;
+
+    productGallery.addEventListener('click', (event: Event): void => changeMainPicture(event, mainImage));
+    addButton.addEventListener('click', (): void => this.addToCart(element));
+    buyButton.addEventListener('click', (): void => {
+      if (!ProductClass.cart.includes(element)) {
+        this.addToCart(element);
+      }
+      this.showCart();
+    });
   }
   showCart(): void {
     const main = document.querySelector('.main') as HTMLElement;
