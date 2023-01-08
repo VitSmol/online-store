@@ -23,7 +23,6 @@ const createSliders = () => {
   const priceElement = new Slider(priceSlider as HTMLDivElement, price.min, price.max);
   const stockElement = new Slider(stockSlider as HTMLDivElement, stock.min, stock.max);
   Filter.sliderItems.push(priceElement, stockElement);
-  console.log(Filter.sliderItems);
 };
 
 createSliders();

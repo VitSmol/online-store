@@ -1,4 +1,6 @@
-import { eventType, minMax } from "../interfaces";
+import { eventType, minMax, minMaxQuery, Product } from "../interfaces";
+import { CheckboxItem } from "./checkboxItem";
+import { ProductClass } from "./productClass";
 // import { Filter } from "./filter";
 
 export class Slider {
@@ -81,6 +83,30 @@ export class Slider {
     const handler = this.activeHandle as HTMLElement | null;
     handler!.dataset.value = this.calcHandleValue((newX + handleRect.width / 2) / parentRect.width);
     this.range.style.setProperty(property, newX + "px");
+
+    if (this.range.id) {
+      const min = (this.handles[0] as HTMLElement).dataset.value;
+      const max = (this.handles[1] as HTMLElement).dataset.value;
+      CheckboxItem.minMaxQuery[this.range.id as keyof minMaxQuery] = {
+        min: +min!,
+        max: +max!
+      };
+    }
+
+    console.log(CheckboxItem.minMaxQuery); // contextObject
+    function filteredByPrice(this: minMaxQuery, value: Product) {
+      // console.log(value);
+      // console.log(CheckboxItem.minMaxQuery)
+      return (value.price > this.price!.min && value.price < this.price!.max);
+    }
+    function filteredByStock(this: minMaxQuery, value: Product) {
+      return (value.stock > this.price!.min && value.stock < this.stock!.max);
+    }
+
+    ProductClass._parent = document.querySelector('.goods-cards') as HTMLDivElement;
+    ProductClass.tempProducts = ProductClass.allProducts.filter(filteredByPrice, CheckboxItem.minMaxQuery);
+    ProductClass.tempProducts = ProductClass.allProducts.filter(filteredByStock, CheckboxItem.minMaxQuery);
+    new ProductClass(ProductClass._parent).init(ProductClass.tempProducts);
   }
 
   calcHandleValue(percentage: number): string {
@@ -93,10 +119,9 @@ export class Slider {
   setValue = (minMax: minMax) => {
     const minX = 300 / this.max * minMax.min - 9.75;
     const maxX = 300 / this.max * minMax.max - 9.75;
-    (this.handles[0] as HTMLElement).dataset.value = minMax.min+"";
-    (this.handles[1] as HTMLElement).dataset.value = minMax.max+"";
+    (this.handles[0] as HTMLElement).dataset.value = minMax.min + "";
+    (this.handles[1] as HTMLElement).dataset.value = minMax.max + "";
     this.range.style.setProperty("--x-1", minX + "px");
     this.range.style.setProperty("--x-2", maxX + "px");
   };
-
 }
