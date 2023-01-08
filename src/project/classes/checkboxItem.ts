@@ -3,12 +3,13 @@ import * as filters from "../filters";
 import { minMaxQuery, Product, query, SearchBy } from "../interfaces";
 import { Filter } from "./filter";
 import { ProductClass } from "./productClass";
+import { setStorage } from "./storage";
 
 export class CheckboxItem {
   static goodsParent: HTMLDivElement;
   static query: query = {
     category: [],
-    brand: [],
+    brand: []
   };
   static minMaxQuery: minMaxQuery = {
     price: {
@@ -41,6 +42,8 @@ export class CheckboxItem {
     this.label.append(this.input, this.el[0][0].toUpperCase() + this.el[0].slice(1).toLowerCase());
     this.parent.append(this.label);
     this.input.addEventListener('click', this.querySearch.bind(this));
+    const count = document.getElementById('count');
+    (count as HTMLElement).innerHTML = ProductClass.allProducts.length + '';
   }
 
   hideOtherInputs() {
@@ -117,16 +120,21 @@ export class CheckboxItem {
         return this.brand!.includes(value.brand.toLowerCase());
       }
     }
-
+    const count = document.getElementById('count');
     ProductClass.tempProducts = ProductClass.allProducts.filter(filteredArray, CheckboxItem.query as query);
     ProductClass._parent = document.querySelector('.goods-cards') as HTMLDivElement;
 
     if (ProductClass.tempProducts.length === 0 && this.checkQuery(CheckboxItem.query)) {
       new ProductClass(ProductClass._parent).init(ProductClass.tempProducts);
+      // console.log(count);
+      (count as HTMLElement).innerHTML = ProductClass.tempProducts.length + '';
+      
     } else if (ProductClass.tempProducts.length === 0 && !this.checkQuery(CheckboxItem.query)) {
       new ProductClass(ProductClass._parent).init(ProductClass.allProducts);
+      (count as HTMLElement).innerHTML = ProductClass.allProducts.length + '';
     } else if (ProductClass.tempProducts.length && this.checkQuery(CheckboxItem.query)) {
       new ProductClass(ProductClass._parent).init(ProductClass.tempProducts);
+      (count as HTMLElement).innerHTML = ProductClass.tempProducts.length + '';
     }
     if (ProductClass.tempProducts.length !== 0) {
       if (this.checkQuery(CheckboxItem.query)) {
@@ -143,6 +151,10 @@ export class CheckboxItem {
       Filter.sliderItems[0].setValue(filters.price);
       Filter.sliderItems[1].setValue(filters.stock);
     }
+
+    // setStorage(CheckboxItem.query);
+    console.log(localStorage);
+    
   }
   getQuery() {
     const value = this.input.dataset.value;

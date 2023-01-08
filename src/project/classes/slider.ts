@@ -38,6 +38,14 @@ export class Slider {
     firstHandle!.dataset.value = this.range.dataset.min;
     secondHandle!.dataset.value = this.range.dataset.max;
 
+    if (this.range.id) {
+      const min = (this.handles[0] as HTMLElement).dataset.value;
+      const max = (this.handles[1] as HTMLElement).dataset.value;
+      CheckboxItem.minMaxQuery[this.range.id as keyof minMaxQuery] = {
+        min: +min!,
+        max: +max!
+      };
+    }
     //TODO
     // const btn = document.querySelector('.btn-warning');
     // btn!.addEventListener('click', this.setMinValue.bind(this));
@@ -93,20 +101,21 @@ export class Slider {
       };
     }
 
-    console.log(CheckboxItem.minMaxQuery); // contextObject
+    console.log(CheckboxItem.minMaxQuery);
+
     function filteredByPrice(this: minMaxQuery, value: Product) {
-      // console.log(value);
-      // console.log(CheckboxItem.minMaxQuery)
-      return (value.price > this.price!.min && value.price < this.price!.max);
-    }
-    function filteredByStock(this: minMaxQuery, value: Product) {
-      return (value.stock > this.price!.min && value.stock < this.stock!.max);
+      // console.log(ProductClass.tempProducts);
+      console.log(CheckboxItem.minMaxQuery); // contextObject
+      return (value.price >= this.price!.min && value.price <= this.price!.max) &&
+        (value.stock >= this.stock!.min && value.stock <= this.stock!.max);
     }
 
     ProductClass._parent = document.querySelector('.goods-cards') as HTMLDivElement;
     ProductClass.tempProducts = ProductClass.allProducts.filter(filteredByPrice, CheckboxItem.minMaxQuery);
-    ProductClass.tempProducts = ProductClass.allProducts.filter(filteredByStock, CheckboxItem.minMaxQuery);
+
     new ProductClass(ProductClass._parent).init(ProductClass.tempProducts);
+    const count = document.getElementById('count');
+    (count as HTMLElement).innerHTML = ProductClass.tempProducts.length + '';
   }
 
   calcHandleValue(percentage: number): string {

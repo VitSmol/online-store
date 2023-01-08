@@ -10,6 +10,7 @@ export type Product = {
   rating: number;
   stock: number;
   thumbnail: string;
+  count?: string,
 }
 
 export type category = {

@@ -35,6 +35,7 @@ export class ProductClass implements IProduct {
     this.currentProduct = element;
     this.card = document.createElement('div');
     this.card.classList.add('goods-card');
+    this.card.id = element.id + '';
     this.card.dataset.category = element.category;
     this.card.dataset.brand = element.brand.toLowerCase();
     this.card.dataset.brand = element.brand.toLowerCase();
@@ -76,8 +77,10 @@ export class ProductClass implements IProduct {
     info.append(h3, brand, rating, controls);
     this.card.append(cardImage, info);
     this.parent.append(this.card);
+
     btnMore.addEventListener('click', this.showElement.bind(this, this.currentProduct));
     cartBtn.addEventListener('click', this.addToCart.bind(this, this.currentProduct));
+
     const toCartPageBtn = document.querySelector('.trolley-button') as HTMLElement;
     toCartPageBtn.addEventListener('click', this.showCart.bind(this));
   }
