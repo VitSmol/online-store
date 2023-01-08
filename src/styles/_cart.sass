@@ -1,0 +1,157 @@
+@import 'variables'
+
+@mixin list()
+  list-style: none
+  padding: 0
+  margin: 0
+
+@mixin image()
+  display: block
+
+.cart-section .container
+  display: grid
+  grid-template-columns: 1fr 300px
+  grid-template-rows: auto
+  gap: 30px
+  padding: 30px 0
+
+.card-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 40px
+
+.on-page-value
+  border: 3px solid $orange
+  border-radius: 30px
+  padding: 5px 10px
+  width: 60px
+  outline: none
+
+.left-button,
+.right-button
+  width: 48px
+  height: 48px
+  border-radius: 50%
+  background: $orange
+  font-size: 20px
+  line-height: 20px
+  color: #ffffff
+
+  &:hover
+    box-shadow: 0 0 5px 3px $gray
+
+.pagination
+  display: flex
+  align-items: center
+  justify-items: center
+  gap: 20px
+
+.current-page-number
+  display: flex
+  justify-content: center
+  align-items: center
+  width: 48px
+  height: 48px
+  border-radius: 50%
+  border: 3px solid $orange
+  font-size: 24px
+
+.goods-summary
+  grid-row: 1 / 2
+  grid-column: 2 / 3
+  max-height: 270px
+  display: flex
+  flex-direction: column
+  align-items: center
+  border: 3px solid $orange
+  border-radius: 30px
+  padding: 20px 0
+  gap: 15px
+
+.subtitle
+  padding: 0
+  margin: 0
+
+.discount-field
+  border: none
+  border-radius: 5px
+  box-shadow: 0 0 2px 1px $orange
+  outline: none
+  text-align: center
+
+.product-card
+  display: grid
+  grid-template-columns: 20px 120px 1fr 120px
+  grid-template-rows: 150px
+  gap: 5px
+  box-shadow: 0px 0px 5px rgb(0 0 0 / 14%)
+  border-radius: 20px
+  padding: 10px
+  align-items: center
+
+.goods-in-cart
+  display: flex
+  flex-direction: column
+  gap: 20px
+
+  .product-image
+    display: flex
+    align-items: center
+    width: 100px
+    height: 100px
+
+    .image
+      width: 100%
+      height: auto
+
+  .product-info
+    display: grid
+    grid-template-columns: 1fr 1fr
+    grid-template-rows: repeat(3, 1fr)
+    column-gap: 10px
+
+    .title
+      grid-column: 1 / 2
+      grid-row: 1 / 2
+      justify-self: end
+
+    .brand
+      grid-column: 2 / 3
+      grid-row: 1 / 2
+
+    .description
+      grid-column: 1 / 3
+      grid-row: 2 / 3
+      justify-self: center
+      text-align: center
+
+    .discount-percentage
+      grid-column: 1 / 2
+      grid-row: 3 / 4
+
+    .rating-percentage
+      grid-column: 2 / 3
+      grid-row: 3 / 4
+
+.product-counter
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.counter
+  width: 100%
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+.plus-button,
+.minus-button
+  width: 32px
+  height: 32px
+  outline: none
+  box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.05)
+  border: none
+  border-radius: 40px
+  &:hover
+    box-shadow: inset 0px 0px 5px rgba(255, 153, 0, 0.3)

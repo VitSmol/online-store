@@ -2,6 +2,7 @@
 import { products } from "../data";
 import { IProduct, Product } from "../interfaces";
 import { getDescriptionPage } from "../description";
+import { drawProducts, getCartPage } from "../cart";
 
 export class ProductClass implements IProduct {
   public currentProduct!: Product;
@@ -10,6 +11,8 @@ export class ProductClass implements IProduct {
   static cart: Product[] = [];
   static allProducts: Product[] = [...products];
   static tempProducts: Product[] = [];
+  static cardProductsAmount: number;
+  static cardProductsCount = 0 as number;
 
   constructor(
     public parent: HTMLDivElement,
@@ -75,6 +78,8 @@ export class ProductClass implements IProduct {
     this.parent.append(this.card);
     btnMore.addEventListener('click', this.showElement.bind(this, this.currentProduct));
     cartBtn.addEventListener('click', this.addToCart.bind(this, this.currentProduct));
+    const toCartPageBtn = document.querySelector('.trolley-button') as HTMLElement;
+    toCartPageBtn.addEventListener('click', this.showCart.bind(this));
   }
 
   itemsFound(isFound: boolean): void {
@@ -84,12 +89,20 @@ export class ProductClass implements IProduct {
 
   addToCart(element: Product): void {
     ProductClass.cart.push(element);
+    ProductClass.cardProductsCount += 1;
     console.log(element);
     console.log(ProductClass.cart);
+    console.log(ProductClass.cardProductsCount);
   }
   showElement(element: Product): void {
     console.log(element);
     const main = document.querySelector('.main') as HTMLElement;
     main.innerHTML = getDescriptionPage(element.id);
+  }
+  showCart(): void {
+    const main = document.querySelector('.main') as HTMLElement;
+    const goods: string = drawProducts(ProductClass.cart, 0, ProductClass.cart.length);
+
+    main.innerHTML = getCartPage(goods, ProductClass.cardProductsCount);
   }
 }
