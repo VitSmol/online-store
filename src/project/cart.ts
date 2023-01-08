@@ -49,7 +49,7 @@ export const drawProducts = (products: Product[], startIndex: number, endIndex: 
   return productsPerPage;
 };
 
-export const getCartPage = (goods: string): string => {
+export const getCartPage = (goods: string, count: number): string => {
   return `<section class="cart-section">
   <div class="container">
     <div class="goods-container">
@@ -71,7 +71,7 @@ export const getCartPage = (goods: string): string => {
     </div>
     <div class="goods-summary">
       <h3 class="subtitle">Текущий счёт</h3>
-      <div class="products-count">Товаров в корзине: <span class="count-value">0</span></div>
+      <div class="products-count">Товаров в корзине: <span class="count-value">${count}</span></div>
       <div class="products-amount">Текущая сумма: <span class="amount-value">0</span>$</div>
       <input class="discount-field" type="text" placeholder="Введите промокод">
       <button class="buy-button button">Перейти к покупке</button>

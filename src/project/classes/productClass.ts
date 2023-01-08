@@ -103,6 +103,6 @@ export class ProductClass implements IProduct {
     const main = document.querySelector('.main') as HTMLElement;
     const goods: string = drawProducts(ProductClass.cart, 0, ProductClass.cart.length);
 
-    main.innerHTML = getCartPage(goods);
+    main.innerHTML = getCartPage(goods, ProductClass.cardProductsCount);
   }
 }
