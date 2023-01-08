@@ -1,6 +1,6 @@
 import { getPopup } from "./popup";
 
-const showPopup = (event: Event): void => {
+export const showPopup = (event: Event): void => {
   if ((event.target as HTMLElement).closest('.buy-button')) {
     const main = document.querySelector('.main') as HTMLElement;
     main.innerHTML += getPopup();

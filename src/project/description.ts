@@ -70,3 +70,10 @@ export const getDescriptionPage = (id: number): string => {
         </div>
     </section>`;
 };
+
+export const changeMainPicture = (event: Event, mainImage: HTMLImageElement): void => {
+  const galleryPicture = (event.target as HTMLElement).closest('.gallery-image') as HTMLImageElement;
+  if (galleryPicture) {
+    mainImage.src = galleryPicture.src;
+  }
+};
