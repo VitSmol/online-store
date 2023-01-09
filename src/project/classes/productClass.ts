@@ -15,13 +15,17 @@ export class ProductClass implements IProduct {
   static allProducts: Product[] = [...products];
   static tempProducts: Product[] = [];
   static cardProductsAmount: number;
-  static cardProductsCount = 0 as number;
+  static cardProductsCount: number = ProductClass.cart.length;
 
   constructor(
     public parent: HTMLDivElement,
   ) {
     getCartStorage();
     updateCartCount();
+  }
+
+  static clearCart() {
+    ProductClass.cart = [];
   }
 
   init(array: Product[]): void {
@@ -115,7 +119,7 @@ export class ProductClass implements IProduct {
     const buyButton = main.querySelector('.buy-button') as HTMLButtonElement;
 
     productGallery.addEventListener('click', (event: Event): void => changeMainPicture(event, mainImage));
-    addButton.addEventListener('click', (): void => this.addToCart(element, this.currentBtn));
+    addButton.addEventListener('click', (): void => this.addToCart(element, addButton));
     buyButton.addEventListener('click', (): void => {
       if (!ProductClass.cart.includes(element)) {
         this.addToCart(element, this.currentBtn);
