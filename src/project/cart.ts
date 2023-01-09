@@ -89,19 +89,12 @@ export const updateCartCount = () => {
 document.addEventListener('click', (event: Event): void => {
   if((event.target as HTMLElement).closest('.product-card')){
     const current = event.target as HTMLElement;
-    // const goodsQuantity = currentCard.closest('.goods-quantity') as HTMLElement;
-    // console.log(currentCard);
-
     if(current.closest('.minus-button')) {
-
-      // goodsQuantity.innerHTML = String(+goodsQuantity.innerHTML - 1);
-      console.log(current.dataset.id, '-');
+      //
     }
 
     if(current.closest('.plus-button')) {
-
-      // goodsQuantity.innerHTML = String(+goodsQuantity.innerHTML - 1);
-      console.log(current.dataset.id);
+      //
     }
   }
 });

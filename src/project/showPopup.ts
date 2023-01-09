@@ -69,10 +69,6 @@ export const showPopup = (event: Event): void => {
         if (!(name.value as string).trim().match(/[A-Za-zА-Яа-яЁё]{3,}(\s[A-Za-zА-Яа-яЁё]{3,})+/g)) {
           isValid = false;
           name.classList.add('incorrect');
-          // const err = document.createElement("div") as HTMLElement;
-          // err.className = 'error-message';
-          // err.textContent = 'ERR';
-          // name.after(err);
         }
 
         if (!(phoneNumber.value as string).match(/\+([0-9]{9,})+/g)) {

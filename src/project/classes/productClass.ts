@@ -4,7 +4,6 @@ import { IProduct, Product } from "../interfaces";
 import { getDescriptionPage, changeMainPicture } from "../description";
 import { drawProducts, getCartPage, updateCartCount } from "../cart";
 import { getCartStorage, setCartToStorage } from "./storage";
-// import { showPopup } from "../showPopup";
 
 export class ProductClass implements IProduct {
   public currentProduct!: Product;
@@ -109,7 +108,6 @@ export class ProductClass implements IProduct {
     setCartToStorage(element);
   }
   showElement(element: Product): void {
-    console.log(element);
     const main = document.querySelector('.main') as HTMLElement;
     main.innerHTML = getDescriptionPage(element.id);
 

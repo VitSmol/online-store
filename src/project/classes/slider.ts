@@ -1,7 +1,6 @@
 import { eventType, minMax, minMaxQuery, Product } from "../interfaces";
 import { CheckboxItem } from "./checkboxItem";
 import { ProductClass } from "./productClass";
-// import { Filter } from "./filter";
 
 export class Slider {
   startPosition: number;
@@ -46,9 +45,6 @@ export class Slider {
         max: +max!
       };
     }
-    //TODO
-    // const btn = document.querySelector('.btn-warning');
-    // btn!.addEventListener('click', this.setMinValue.bind(this));
   }
   destroy() {
     this.element.innerHTML = '';

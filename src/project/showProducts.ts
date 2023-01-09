@@ -24,7 +24,6 @@ export const addSelectListeners = () => {
       }
     });
   };
-  // 
 
   (select as HTMLSelectElement).addEventListener('change', function () {
     if (ProductClass.tempProducts.length === 0) {
@@ -107,10 +106,6 @@ export const toMainPage = (): void => {
   create();
   const parent = document.querySelector('.goods-cards');
   new ProductClass(parent as HTMLDivElement).init(ProductClass.allProducts);
-  // addSelectListeners();
 };
 
 logo.addEventListener('click', toMainPage);
-
-
-// addSelectListeners();

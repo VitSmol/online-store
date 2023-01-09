@@ -49,6 +49,4 @@ export interface IProduct {
 export type query = {
   category?: Array<string | undefined>,
   brand?: Array<string | undefined>,
-  // price?: Array<number | undefined>,
-  // stock?: Array<number | undefined>,
 }

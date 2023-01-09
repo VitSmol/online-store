@@ -1,7 +1,6 @@
 
 import { Product } from "./interfaces";
 import { products } from "./data";
-// import { loadImage } from "./imagesLoader";
 
 export const getWay = (product: Product): string => {
   return `<div class="way">STORE >> ${product.category} >> ${product.brand} >> ${product.title}</div>`;
@@ -14,9 +13,6 @@ export const getProductSliderImages = (images: string[]): string => {
     <div class="gallery-item">
       <img class="gallery-image" src="${images[1]}" alt="gallery image">
     </div>`;
-  // return images.reduce((acc: string, source: string): string => acc + `<div class="gallery-item">
-  //         <img class="gallery-image" src="${source}" alt="gallery image">
-  //       </div>`, '');
 };
 
 export const getDescription = (product: Product): string => {
