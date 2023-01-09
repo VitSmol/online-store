@@ -1,0 +1,16 @@
+@import 'variables'
+
+footer
+  display: grid
+  grid-template-columns: 2fr 0.5fr 0.5fr 0.5fr
+  padding: $indent
+  width: 100%
+  align-items: center
+  // gap: 20px
+  a:first-child
+    justify-self: start
+  img
+    width: 300px
+    justify-self: flex-start
+  span, a
+    justify-self: flex-end

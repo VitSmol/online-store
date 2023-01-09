@@ -1,0 +1,84 @@
+@import 'variables'
+
+.popup-shadow
+  position: fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  background: rgba(0, 0, 0, 0.5)
+  z-index: 200
+
+.popup
+  display: flex
+  justify-content: center
+  align-items: center
+  width: 300px
+  height: auto
+  padding-bottom: 30px
+  position: relative
+  top: calc(50% - 250px)
+  left: calc(50% - 150px)
+  border: $orange
+  border-radius: 20px
+  background: $main-background-color
+  .container
+    display: flex
+
+.ordering-form
+  width: 100%
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 10px
+  padding-top: 20px
+  input
+    width: 260px
+    outline: none
+    border: none
+    border-radius: 30px
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.05)
+    padding: 10px 20px
+    &:focus
+      box-shadow: inset 0 0 4px 1px #e2e5ad
+
+  .incorrect
+    color: #ff0000
+    // position: absolute
+    // bottom: 0
+    // right: 0
+    // z-index: 400
+
+  .user-card-info
+    width: 260px
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+    gap: 10px
+    .card-expiry-date
+      width: 145px
+    .card-cvv
+      width: 72px
+    .card-number
+      width: 210px
+    .card-logo
+      margin-top: 5px
+      width: 32px
+      height: 32px
+      background: url("../assets/default-card.svg")
+    .card-logo.visa
+      background: url("../assets/visa.svg")
+    .card-logo.mastercard
+      background: url("../assets/mastercard.svg")
+    .card-logo.unionpay
+      background: url("../assets/unionpay.svg")
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+.ordering-button
+  background: $orange
+  &:hover
+    box-shadow: 0 0 5px 2px #50ff00
