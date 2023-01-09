@@ -22,11 +22,6 @@ export class Filter {
       Filter.checkboxItems.push(element);
     });
   }
-
-    
-  log() {
-    console.log(this);
-  }
 }
 
 

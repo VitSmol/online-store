@@ -1,9 +1,8 @@
 import { getCost } from "../data";
-import * as filters from "../filters";
-import { minMaxQuery, Product, query, SearchBy } from "../interfaces";
+import { minMaxQuery, Product, query, SearchBy, sortBy } from "../interfaces";
 import { Filter } from "./filter";
 import { ProductClass } from "./productClass";
-import { setStorage } from "./storage";
+// import { setStorage } from "./storage";
 
 export class CheckboxItem {
   static goodsParent: HTMLDivElement;
@@ -13,15 +12,16 @@ export class CheckboxItem {
   };
   static minMaxQuery: minMaxQuery = {
     price: {
-      min: 0,//filters.price.min,
-      max: 0//filters.price.max
+      min: 0,
+      max: 0
     },
     stock: {
-      min: 0,//filters.stock.min,
-      max: 0//filters.stock.max
+      min: 0,
+      max: 0
     }
-    // price: filters.price,
-    // stock: filters.stock
+  };
+  static sortQuery: sortBy = {
+    sortBy: []
   };
 
   constructor(
@@ -94,6 +94,7 @@ export class CheckboxItem {
     }
     Filter.checkboxItems.forEach(filterInputs, allQuery);
   }
+
   checkGoods() {
     return document.querySelectorAll('.card');
   }
@@ -126,7 +127,6 @@ export class CheckboxItem {
 
     if (ProductClass.tempProducts.length === 0 && this.checkQuery(CheckboxItem.query)) {
       new ProductClass(ProductClass._parent).init(ProductClass.tempProducts);
-      // console.log(count);
       (count as HTMLElement).innerHTML = ProductClass.tempProducts.length + '';
       
     } else if (ProductClass.tempProducts.length === 0 && !this.checkQuery(CheckboxItem.query)) {
@@ -137,24 +137,12 @@ export class CheckboxItem {
       (count as HTMLElement).innerHTML = ProductClass.tempProducts.length + '';
     }
     if (ProductClass.tempProducts.length !== 0) {
-      if (this.checkQuery(CheckboxItem.query)) {
-        // Filter.sliderItems[0].setValue(filters.price);
-        // Filter.sliderItems[1].setValue(filters.stock);
-      }
-
       const getPrice = getCost(ProductClass.tempProducts, SearchBy.price);
       const getStock = getCost(ProductClass.tempProducts, SearchBy.stock);
       Filter.sliderItems[0].setValue(getPrice);
       Filter.sliderItems[1].setValue(getStock);
-
-    } else {
-      // Filter.sliderItems[0].setValue(filters.price);
-      // Filter.sliderItems[1].setValue(filters.stock);
-    }
-
+    } 
     // setStorage(CheckboxItem.query);
-    console.log(localStorage);
-    
   }
   getQuery() {
     const value = this.input.dataset.value;

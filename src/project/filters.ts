@@ -2,20 +2,17 @@ import { getCheckboxes, getCost, products } from "./data";
 import { SearchBy } from "./interfaces";
 import { Slider } from "./classes/slider";
 import { Filter } from "./classes/filter";
+import { addSelectListeners } from "./showProducts";
 
 export const create = () => {
-
-
   const categoryContainer = document.getElementById('categories');
   const brandsContainer = document.getElementById('brands');
   const priceSlider = document.getElementById('price');
   const stockSlider = document.getElementById('stock');
-
   const categories = getCheckboxes(products, SearchBy.category);
   const brands = getCheckboxes(products, SearchBy.brand);
   const stock = getCost(products, SearchBy.stock);
   const price = getCost(products, SearchBy.price);
-
 
   priceSlider?.setAttribute('data-min', price.min as unknown as string);
   priceSlider?.setAttribute('data-max', price.max as unknown as string);
@@ -42,11 +39,17 @@ export const create = () => {
 
   const buttons = document.querySelectorAll('#size > button');
   buttons.forEach(el =>
-    el.classList.contains('small-size') ?
+    (el.classList.contains('small-size') ?
       createDots(el as HTMLElement, 16) :
-      createDots(el as HTMLElement, 36)
-    //TODO add listeners for change grid 4x4 or 6x6
+      createDots(el as HTMLElement, 36),
+    el.addEventListener('click', () => {
+      const parent = document.querySelector('.goods-cards');
+      el.classList.contains('small-size') ? 
+        ((parent as HTMLDivElement).classList.remove('low-size')) :
+        ((parent as HTMLDivElement).classList.add('low-size'));
+    }))
   );
 
+  addSelectListeners();
 };
 create();

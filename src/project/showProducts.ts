@@ -1,11 +1,44 @@
+import { CheckboxItem } from "./classes/checkboxItem";
 import { ProductClass } from "./classes/productClass";
 import { create } from "./filters";
+import { Product } from "./interfaces";
 
 const parent = document.querySelector('.goods-cards');
 const logo = document.querySelector('.logo');
 const main = document.querySelector('.main');
 
 new ProductClass(parent as HTMLDivElement).init(ProductClass.allProducts);
+
+export const addSelectListeners = () => {
+  const parent = document.querySelector('.goods-cards');
+  const select = document.getElementById('sortBy');
+  
+  const sortBy = (arr: Product[], sort: string) => {
+    const sortOptions = sort.split('-');
+    CheckboxItem.sortQuery.sortBy = sortOptions;
+    return arr.sort((a, b) => {
+      if (sortOptions[1] === 'hi') {
+        return a[sortOptions[0] as keyof Product] as number - Number(b[sortOptions[0] as keyof Product]) as number;
+      } else {
+        return b[sortOptions[0] as keyof Product] as number - Number(a[sortOptions[0] as keyof Product]) as number;
+      }
+    });
+  };
+  // 
+
+  (select as HTMLSelectElement).addEventListener('change', function () {
+    if (ProductClass.tempProducts.length === 0) {
+      sortBy(ProductClass.allProducts, this.value);
+      console.log(sortBy(ProductClass.allProducts, this.value))
+      new ProductClass(parent as HTMLDivElement).init(sortBy(ProductClass.allProducts, this.value));
+    } else {
+      sortBy(ProductClass.tempProducts, this.value);
+      console.log(sortBy(ProductClass.tempProducts, this.value))
+      new ProductClass(parent as HTMLDivElement).init(sortBy(ProductClass.tempProducts, this.value));
+    }
+  });
+};
+
 
 logo?.addEventListener('click', () => {
   (main as HTMLDivElement).innerHTML = `
@@ -77,4 +110,8 @@ logo?.addEventListener('click', () => {
   create();
   const parent = document.querySelector('.goods-cards');
   new ProductClass(parent as HTMLDivElement).init(ProductClass.allProducts);
+  // addSelectListeners();
 });
+
+
+// addSelectListeners();

@@ -100,12 +100,9 @@ export class Slider {
         max: +max!
       };
     }
-
-    console.log(CheckboxItem.minMaxQuery);
+    
 
     function filteredByPrice(this: minMaxQuery, value: Product) {
-      // console.log(ProductClass.tempProducts);
-      console.log(CheckboxItem.minMaxQuery); // contextObject
       return (value.price >= this.price!.min && value.price <= this.price!.max) &&
         (value.stock >= this.stock!.min && value.stock <= this.stock!.max);
     }

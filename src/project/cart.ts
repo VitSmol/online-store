@@ -1,3 +1,4 @@
+import { ProductClass } from "./classes/productClass";
 import { Product } from "./interfaces";
 
 export const drawProduct = (product: Product, index: number/*, count: number*/): string => {
@@ -78,4 +79,9 @@ export const getCartPage = (goods: string, count: number): string => {
     </div>
   </div>
 </section>`;
+};
+
+export const updateCartCount = () => {
+  const cart = document.querySelector('.trolley-goods-count');
+  (cart as HTMLElement).innerHTML = ProductClass.cart.length + '';
 };

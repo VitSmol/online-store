@@ -24,6 +24,9 @@ export enum SearchBy {
   stock = "stock"
 }
 
+export type sortBy = {
+  sortBy?: string[]
+}
 export type eventType = {
   clientX: number
 }
@@ -40,7 +43,7 @@ export type minMaxQuery = {
 
 export interface IProduct {
   showElement(element: Product): void;
-  addToCart(element: Product): void;
+  addToCart(element: Product, button: HTMLButtonElement): void;
 }
 
 export type query = {

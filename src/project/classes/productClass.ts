@@ -2,12 +2,13 @@
 import { products } from "../data";
 import { IProduct, Product } from "../interfaces";
 import { getDescriptionPage, changeMainPicture } from "../description";
-import { drawProducts, getCartPage } from "../cart";
-import { showPopup } from "../showPopup";
+import { drawProducts, getCartPage, updateCartCount } from "../cart";
+// import { showPopup } from "../showPopup";
 
 export class ProductClass implements IProduct {
   public currentProduct!: Product;
   public card!: HTMLDivElement;
+  public currentBtn!: HTMLButtonElement;
   static _parent: HTMLDivElement;
   static cart: Product[] = [];
   static allProducts: Product[] = [...products];
@@ -73,6 +74,7 @@ export class ProductClass implements IProduct {
     btnMore.classList.add('more-info-button', 'button');
     btnMore.innerText = 'More Info';
     const cartBtn = document.createElement('button');
+    this.currentBtn = cartBtn;
     cartBtn.classList.add('add-trolley-button', 'button');
     controls.append(price, btnMore, cartBtn);
     info.append(h3, brand, rating, controls);
@@ -80,7 +82,7 @@ export class ProductClass implements IProduct {
     this.parent.append(this.card);
 
     btnMore.addEventListener('click', this.showElement.bind(this, this.currentProduct));
-    cartBtn.addEventListener('click', this.addToCart.bind(this, this.currentProduct));
+    cartBtn.addEventListener('click',  this.addToCart.bind(this, this.currentProduct, this.currentBtn));
 
     const toCartPageBtn = document.querySelector('.trolley-button') as HTMLElement;
     toCartPageBtn.addEventListener('click', this.showCart.bind(this));
@@ -91,12 +93,13 @@ export class ProductClass implements IProduct {
     isFound ? h2!.innerText = 'Товары в наличии:' : h2!.innerText = 'Товары не найдены!';
   }
 
-  addToCart(element: Product): void {
+  addToCart(element: Product, button: HTMLButtonElement): void {
     ProductClass.cart.push(element);
     ProductClass.cardProductsCount += 1;
-    console.log(element);
-    console.log(ProductClass.cart);
-    console.log(ProductClass.cardProductsCount);
+    updateCartCount();
+    if (ProductClass.cart.includes(element)) {
+      button.disabled = true;
+    }
   }
   showElement(element: Product): void {
     console.log(element);
@@ -109,10 +112,10 @@ export class ProductClass implements IProduct {
     const buyButton = main.querySelector('.buy-button') as HTMLButtonElement;
 
     productGallery.addEventListener('click', (event: Event): void => changeMainPicture(event, mainImage));
-    addButton.addEventListener('click', (): void => this.addToCart(element));
+    addButton.addEventListener('click', (): void => this.addToCart(element, this.currentBtn));
     buyButton.addEventListener('click', (): void => {
       if (!ProductClass.cart.includes(element)) {
-        this.addToCart(element);
+        this.addToCart(element, this.currentBtn);
       }
       this.showCart();
     });
