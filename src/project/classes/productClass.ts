@@ -3,6 +3,7 @@ import { products } from "../data";
 import { IProduct, Product } from "../interfaces";
 import { getDescriptionPage, changeMainPicture } from "../description";
 import { drawProducts, getCartPage, updateCartCount } from "../cart";
+import { getCartStorage, setCartToStorage } from "./storage";
 // import { showPopup } from "../showPopup";
 
 export class ProductClass implements IProduct {
@@ -19,7 +20,8 @@ export class ProductClass implements IProduct {
   constructor(
     public parent: HTMLDivElement,
   ) {
-
+    getCartStorage();
+    updateCartCount();
   }
 
   init(array: Product[]): void {
@@ -95,11 +97,12 @@ export class ProductClass implements IProduct {
 
   addToCart(element: Product, button: HTMLButtonElement): void {
     ProductClass.cart.push(element);
-    ProductClass.cardProductsCount += 1;
+    ProductClass.cardProductsCount = ProductClass.cart.length;
     updateCartCount();
     if (ProductClass.cart.includes(element)) {
       button.disabled = true;
     }
+    setCartToStorage(element);
   }
   showElement(element: Product): void {
     console.log(element);

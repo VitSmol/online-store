@@ -29,11 +29,9 @@ export const addSelectListeners = () => {
   (select as HTMLSelectElement).addEventListener('change', function () {
     if (ProductClass.tempProducts.length === 0) {
       sortBy(ProductClass.allProducts, this.value);
-      console.log(sortBy(ProductClass.allProducts, this.value))
       new ProductClass(parent as HTMLDivElement).init(sortBy(ProductClass.allProducts, this.value));
     } else {
       sortBy(ProductClass.tempProducts, this.value);
-      console.log(sortBy(ProductClass.tempProducts, this.value))
       new ProductClass(parent as HTMLDivElement).init(sortBy(ProductClass.tempProducts, this.value));
     }
   });
