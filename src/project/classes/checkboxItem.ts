@@ -2,6 +2,7 @@ import { getCost } from "../data";
 import { minMaxQuery, Product, query, SearchBy, sortBy } from "../interfaces";
 import { Filter } from "./filter";
 import { ProductClass } from "./productClass";
+import { getQueryFromStorage, setQueryToStorage } from "./storage";
 // import { setStorage } from "./storage";
 
 export class CheckboxItem {
@@ -44,6 +45,9 @@ export class CheckboxItem {
     this.input.addEventListener('click', this.querySearch.bind(this));
     const count = document.getElementById('count');
     (count as HTMLElement).innerHTML = ProductClass.allProducts.length + '';
+
+    getQueryFromStorage();
+    // this.querySearch();
   }
 
   hideOtherInputs() {
@@ -143,6 +147,7 @@ export class CheckboxItem {
       Filter.sliderItems[1].setValue(getStock);
     } 
     // setStorage(CheckboxItem.query);
+    setQueryToStorage(this.searchBy);
   }
   getQuery() {
     const value = this.input.dataset.value;

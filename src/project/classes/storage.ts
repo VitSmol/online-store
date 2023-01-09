@@ -1,6 +1,7 @@
 // import { query } from "../interfaces";
 
 import { Product } from "../interfaces";
+import { CheckboxItem } from "./checkboxItem";
 import { ProductClass } from "./productClass";
 
 // import { CheckboxItem } from "./checkboxItem";
@@ -11,11 +12,11 @@ export const setCartToStorage = (element: Product) => {
     localStorage.setItem('cart', JSON.stringify(tempArray));
     console.log(
       localStorage
-    ); 
+    );
   } else {
     const tempCartStorage: Product[] = JSON.parse(localStorage.cart);
     const compare = (arr: Product[], el: Product) => {
-      return arr.some((item: Product) =>{
+      return arr.some((item: Product) => {
         return el.id === item.id;
       });
     };
@@ -30,7 +31,7 @@ export const setCartToStorage = (element: Product) => {
     console.log(
       ProductClass.cart
     );
-    
+
   }
 };
 
@@ -40,3 +41,18 @@ export const getCartStorage = () => {
   }
 };
 
+export const setQueryToStorage = (value: string) => {
+  if (value === 'brand') {
+    localStorage.setItem(value, JSON.stringify(CheckboxItem.query.brand));
+  }
+  if (value === 'category') {
+    localStorage.setItem(value, JSON.stringify(CheckboxItem.query.category));
+  }
+};
+
+export const getQueryFromStorage = () => {
+  CheckboxItem.query = {
+    category: JSON.parse(localStorage.category),
+    brand: JSON.parse(localStorage.brand),
+  };
+};
