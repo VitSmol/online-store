@@ -3,9 +3,9 @@ import { ProductClass } from "./classes/productClass";
 import { create } from "./filters";
 import { Product } from "./interfaces";
 
-const parent = document.querySelector('.goods-cards');
-const logo = document.querySelector('.logo');
-const main = document.querySelector('.main');
+const parent = document.querySelector('.goods-cards')  as HTMLElement;
+const logo = document.querySelector('.logo') as HTMLElement;
+const main = document.querySelector('.main')  as HTMLElement;
 
 new ProductClass(parent as HTMLDivElement).init(ProductClass.allProducts);
 
@@ -37,8 +37,7 @@ export const addSelectListeners = () => {
   });
 };
 
-
-logo?.addEventListener('click', () => {
+export const toMainPage = (): void => {
   (main as HTMLDivElement).innerHTML = `
   <div class="filter__wrapper">
   <div id="search">
@@ -109,7 +108,9 @@ logo?.addEventListener('click', () => {
   const parent = document.querySelector('.goods-cards');
   new ProductClass(parent as HTMLDivElement).init(ProductClass.allProducts);
   // addSelectListeners();
-});
+};
+
+logo.addEventListener('click', toMainPage);
 
 
 // addSelectListeners();

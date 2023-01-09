@@ -30,7 +30,7 @@ export const drawProduct = (product: Product, index: number/*, count: number*/):
               </div>
               <div class="counter">
                 <button class="plus-button">+</button>
-                <div class="goods-quantity">1</div>
+                <div class="goods-quantity">${product.count ?? 1}</div>
                 <button class="minus-button">-</button>
               </div>
               <div class="product-total-amount">
@@ -85,3 +85,23 @@ export const updateCartCount = () => {
   const cart = document.querySelector('.trolley-goods-count');
   (cart as HTMLElement).innerHTML = ProductClass.cart.length + '';
 };
+
+document.addEventListener('click', (event: Event): void => {
+  if((event.target as HTMLElement).closest('.product-card')){
+    const current = event.target as HTMLElement;
+    // const goodsQuantity = currentCard.closest('.goods-quantity') as HTMLElement;
+    // console.log(currentCard);
+
+    if(current.closest('.minus-button')) {
+
+      // goodsQuantity.innerHTML = String(+goodsQuantity.innerHTML - 1);
+      console.log(current.dataset.id, '-');
+    }
+
+    if(current.closest('.plus-button')) {
+
+      // goodsQuantity.innerHTML = String(+goodsQuantity.innerHTML - 1);
+      console.log(current.dataset.id);
+    }
+  }
+});
